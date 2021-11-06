@@ -185,7 +185,6 @@ export function* apiVideoCard({payload, mediaType}) {
 export function* apiRecommen({payload, mediaType}) {
   try {
     const response = yield call(getRecommen, payload, mediaType)
-    console.log(response)
     yield put({
       type: ADD_RECOMMEN,
       payload: response.data.results
@@ -243,9 +242,9 @@ export function* apiGenres() {
 //obtiene una lista de peliculas segun el genero
 
 
-export function* apiMovieGenre({payload}) {
+export function* apiMovieGenre({payload, mediaType}) {
   try {
-    const response = yield call(getMovieGenre, payload)
+    const response = yield call(getMovieGenre, payload, mediaType)
     yield put({
       type: ADD_GENRE,
       payload: response.data.results

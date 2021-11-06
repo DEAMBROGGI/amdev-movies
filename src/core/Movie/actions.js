@@ -95,7 +95,8 @@ export const callSearch = (val) => {
 export const callMovieGenre = (val) => {
   return {
     type: CALL_MOVIE_GENRE,
-    payload: val
+    payload: val,
+    mediaType:"movie"
   }
 }
 //actions

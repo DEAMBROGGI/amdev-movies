@@ -18,7 +18,7 @@ export const getSearch = (key) => axios.get(`${url}search/multi${apiKey}&query=$
 //trae una lista de generos
 export const getGenres = () => axios.get(`${url}genre/movie/list${apiKey}&language=es-ES`);
 //trae una lista de peliculas segun el genero
-export const getMovieGenre = (genre) => axios.get(`${url}discover/movie${apiKey}&sort_by=popularity.desc&page=1&with_genres=${genre}&language=es-ES`);
+export const getMovieGenre = (genre, mediaType) => axios.get(`${url}discover/${mediaType}${apiKey}&sort_by=popularity.desc&page=1&with_genres=${genre}&language=es-ES`);
 //trae comentarios de una pelicula en concreto
 export const getReviews = (idPelicula, mediaType) => axios.get(`${url}${mediaType}/${idPelicula}/reviews${apiKey}&page=1&language=es-ES`);
 //trae el trailer offical de una pelicula

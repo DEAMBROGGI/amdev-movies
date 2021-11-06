@@ -28,7 +28,7 @@ function Movie() {
         genres.map((element) => {
           if(element.name === key) {
             dispatch(callMovieGenre(element.id))
-        
+            
           }
         })
       )}
@@ -44,22 +44,22 @@ function Movie() {
             <Grid container spacing={3}>
               {genreResults && genreResults.map((element, keys)  => (
                 <React.Fragment key={keys}>
-                  {element.backdrop_path && element.title && (
+                  
                    
                    <Grid item xs={12} sm={6} md={4} lg={3} >
-                     <Link className="a" to={`/post/${element.media_type}/${element.id}`}> 
+                     <Link className="a" to={`/post/movie/${element.id}`}> 
                     <Card 
                       element={{
                         backdrop_path : element.backdrop_path,
                         title: element.title,
                         id: element.id,
-                        media_type: key
+                        media_type: "movie"
                       }}
                     />
                    </Link>   
                     </Grid>
                   
-                  )}
+                
                 </React.Fragment>
               ))}
             </Grid>
