@@ -1,17 +1,29 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import { render } from 'react-dom';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import * as serviceWorker from './serviceWorker';
+//react router >>> embebe el app en un route >>> permite usar funciones del router-react-dom
+import { createBrowserHistory } from "history";
+import { Router } from "react-router-dom";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+//se embebe al objeto en un Provider lo cual permite usar redux en toda la app
+import { Provider } from 'react-redux';
+import store from './core/index';
+import { ThemeProvider } from '@material-ui/core';
+import theme from './theme/theme';
+
+//habilitar history
+const customHistory = createBrowserHistory();
+
+render(
+  <Router history={customHistory}>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </Provider>
+  </Router>,
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+serviceWorker.unregister();

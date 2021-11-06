@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Routes from './routes';
+import NavBar from './components/navBar/NavBar'
+import Snackbar from './components/snackbar/Snackbar'
+import './css/body.css'
 
+/*
+  importo los componentes que van a ser utilizados en toda la app 
+  y en el mismo nivel pongo las rutas que van a ser llamadas
+*/
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Snackbar />
+      <NavBar />
+      <Routes />
+      
+    </>
   );
 }
 

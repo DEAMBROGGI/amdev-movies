@@ -1,0 +1,28 @@
+ 
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  a {
+    text-decoration: none;
+    cursor: auto;
+  }
+  body {
+    background: #f7f7f7f2;
+    font-family: 'Roboto';
+  }
+  .movie_card:hover {
+    transform: scale(1.1);
+    transition: all 0.4s;
+    
+   
+  }
+ .blockVideo{
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   top: 0;
+   left: 0;
+   z-index: 300;
+   background-color: transparent;
+ }
