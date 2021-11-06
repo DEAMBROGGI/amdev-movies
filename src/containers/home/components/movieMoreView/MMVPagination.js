@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     position: "fixed",
     bottom: 0,
-    zIndex: 200,
+    zIndex: 1000,
     backgroundColor: "#fff",
     padding: "10px 80px",
 
