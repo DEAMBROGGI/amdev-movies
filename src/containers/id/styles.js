@@ -27,6 +27,12 @@ export const useStyles = makeStyles(theme => ({
     border: '1px solid #01d277',
     marginLeft: '5px',
     color: '#01d277'
+  },
+  button: {
+    color:"white",
+    margin: "2%",
+    width: "98%",
+    background: theme.pallete.primary,
   }
 }));
 

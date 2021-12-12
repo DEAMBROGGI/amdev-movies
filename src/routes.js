@@ -9,6 +9,7 @@ import Home from './containers/home/Home';
 import Id from './containers/id/Id';
 import Movie from './containers/movie/Movie';
 import MovieMoreView from './containers/home/components/movieMoreView/MovieMoreView';
+import LastAdd from './containers/home/components/LastAddMovie/LastAdd'
 
 //controlador de route del proyecto
 const Router = () => {
@@ -25,6 +26,9 @@ const Router = () => {
       </Route>
       <Route path="/moviemoreview/">
         <MovieMoreView />
+      </Route>
+      <Route path="/populares/">
+        <LastAdd />
       </Route>
       <Route path="*">
         <Redirect to="/" />

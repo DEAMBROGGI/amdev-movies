@@ -24,10 +24,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MMVPagination = ({pageNumber }) => {
+const MMVPagination = ({pageNumber, mediaType }) => {
   const dispatch = useDispatch();
   
-  const page = useSelector(state => state.movieReducer.page)
+  const {page} = useSelector(state => state.movieReducer)
   const [numberPage, setPage] = React.useState(page);
  
   const classes = useStyles();
@@ -36,7 +36,7 @@ const MMVPagination = ({pageNumber }) => {
     setPage(value);
     
     dispatch(addPage(value))
-    dispatch(callTop(value))
+    dispatch(callTop(value, mediaType))
 
     window.scroll(0, 0);
   };

@@ -39,3 +39,10 @@
 .frameContent {
   margin-top: 20px;
 }
+.btnSeason{
+  background: linear-gradient(to right,#081c24,#004d40  )!important;
+  color: white !important;
+  margin: 2% !important;
+  width: 98%;
+
+}

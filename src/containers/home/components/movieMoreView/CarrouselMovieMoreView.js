@@ -10,23 +10,24 @@ import { callTop, callVideo } from '../../../../core/Movie/actions';
 import { responsive, useStyles } from './styles';
 import Skeletor from '../../../../components/skeleton/Skeleton'
 import Card from '../../../card/Card'
+import CardMMV from "../../../card/CardMMV"
 //carrousel
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-
+import { SERVER_LIST, TITLE_SERVER } from '../../../../core/Movie/types';
 
 function CarrouselMovieMoreView() {
 
   const[isMoving, setIsMoving]=React.useState(false)
   const classes = useStyles();
 
-  const top = useSelector(state => state.movieReducer.top);
-
+  const {top,mediaType} = useSelector(state => state.movieReducer);
+  top.splice(10)
   const dispatch = useDispatch();
   
   useEffect(() => {
     
-    dispatch(callTop())
+    dispatch(callTop(1,mediaType))
     
   }, []);
   
@@ -38,14 +39,15 @@ function CarrouselMovieMoreView() {
          
               <Carousel 
               zIndex={1}
-              infinite={true}
               responsive={responsive} 
               containerClass="carousel-container" 
               centerMode = { true }
               beforeChange={() => setIsMoving(true)}
-              afterChange={() => setIsMoving(false)}>
+              afterChange={() => setIsMoving(false)}
+              draggable={true}  
+              >
               
-                {top && top.map((element, key)  => (
+                {top && top.map((element, index)  => (
               
            
                <Link className="a" to={`/post/${element.media_type}/${element.id}`} 
@@ -53,14 +55,22 @@ function CarrouselMovieMoreView() {
                 onClick={e => {
                 if (isMoving) {
                   e.preventDefault();
+                  
                 }
               }}>
                  
-                  <Card
+                  <CardMMV
                     
                     
-                    element={element}
-                    key={key}
+                    element={{
+                      backdrop_path : element.backdrop_path || element.poster_path,
+                      poster_path:element.poster_path,
+                      title: element.title || element.name,
+                      id: element.id,
+                      genre:element.genre_ids,
+                    }}
+                    ranking={index + 1}
+                    key={index}
                   />
                  
                </Link>
@@ -78,6 +88,7 @@ function CarrouselMovieMoreView() {
 }
 CarrouselMovieMoreView.propTypes = {
   top: PropTypes.array,
+  mediaType:PropTypes.string,
   callTop: PropTypes.func
 }
 

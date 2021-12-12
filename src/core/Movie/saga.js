@@ -1,5 +1,9 @@
 import {
+  ADD_SEASONS,
+  ADD_EPISODES,
+  ADD_SEASON_DATA,
   ADD_TOP,
+  ADD_LAST_ADD,
   ADD_MOVIE,
   ADD_SEARCH_RESULTS,
   ADD_GENRES,
@@ -11,9 +15,11 @@ import {
   ADD_RECOMMEN,
   ADD_SNACKBAR,
   ADD_TOTAL_PAGES,
+  SERVER_LIST,
 } from './types';
 import {
   getMovieTop,
+  getMovieLastAdd,
   getMovieId,
   getSearch,
   getGenres,
@@ -22,28 +28,44 @@ import {
   getVideo,
   getRecommen,
   getSimilar,
-  getVideoCard
+  getVideoCard,
+  getSeasons
 } from './services';
+import {GetServerPPHD, selectIDmovie,ServerMovie} from './servers/serverdos'
 import { put, all, call } from 'redux-saga/effects';
 
 //Container HOME (all called to the api)
 // trae de la api las peliculas mas buscadas
 
-export function* apiTop({page}) {
+export  function* apiServer({movieName,releaseDate, mediaType, trailer}) {
+  try {
+   const response =  yield  call( GetServerPPHD, movieName,releaseDate, mediaType, trailer)
+   let test = JSON.stringify(response);
+  
+   console.log(test)
+      yield put({
+    type:SERVER_LIST,
+    serverList:response
+  })
+  
+     } 
+  catch (err) {
+   
+ }
+}
+export function* apiTop({page,mediaType}) {
      try {
-      const response = yield call(getMovieTop, page)
-      console.log(response)
+      const response = yield call(getMovieTop, page, mediaType)
+     
       yield put({
         type:ADD_TOTAL_PAGES,
         numberOfPages:response.data.total_pages,
       })
-     
       yield put({
         type: ADD_TOP,
         payload: response.data.results
       })
-        }
-      
+        } 
      catch (err) {
       yield put({
         type: ADD_SNACKBAR,
@@ -54,14 +76,36 @@ export function* apiTop({page}) {
       })
     }
 }
+export function* apiLastAdd({page, mediaType}) { 
+  try {
+   const response = yield call(getMovieLastAdd, page, mediaType)
+   console.log(response)
+   yield put({
+     type:ADD_TOTAL_PAGES,
+     numberOfPages:response.data.total_pages,
+   })
+   yield put({
+     type: ADD_LAST_ADD,
+     payload: response.data.results
+   })
+     }
+  catch (err) {
+   yield put({
+     type: ADD_SNACKBAR,
+     payload: {
+       view: true,
+       message: 'No pudimos trarte las Ultimas Peliculas Agregadas.' 
+     }
+   })
+ }
+}
 
 //trae un listado de peliculas segun un "nombre"
 
 export function* apiSearch({payload}) {
   try {
-    const response = yield call(getSearch, payload)
-    console.log(response)
-    if (response.data.results.length == 0) {
+    const response = yield call(getSearch, payload)    
+    if (response.data.results.length === 0) {
       yield put({
         type: ADD_SNACKBAR,
         payload: {
@@ -76,22 +120,16 @@ export function* apiSearch({payload}) {
       })
     }
   } catch (err) {
-    yield put({
-      type: ADD_SNACKBAR,
-      payload: {
-        view: true,
-        message: '¿Seguro es una pelicula?'
-      }
-    })
+   
   }
 }
 
 
 //Container ID (all called to the api)
-
-export function* apiMovieId({payload, mediaType}) {
+export function* apiMovieId({payload, mediaType, seasonSelect}) {
   try {
     const response = yield call(getMovieId, payload, mediaType)
+    console.log(response)
     yield put({
           type: ADD_MOVIE,
           payload: {
@@ -99,22 +137,45 @@ export function* apiMovieId({payload, mediaType}) {
             genres: response.data.genres,
             overview: response.data.overview,
             poster_path: response.data.poster_path,
-            release_data: response.data.release_data,
             runtime: response.data.runtime,
-            title: response.data.title,
+            title: response.data.title || response.data.name,
             vote_average: response.data.vote_average,
-            release_date: response.data.release_date
+            release_date: response.data.release_date || response.data.first_air_date,
+            original_name: response.data.original_title || response.data.original_name
           }
         })
+        if(mediaType ==="tv"){
+          let data = response.data.seasons
+          let dataFilter = data.filter(item => item.name !== "Especiales"  ) || (item => item.name !== "Specials" )
+          
+          yield put({
+            type: ADD_SEASONS,
+            payload: dataFilter
+          })
+          const season = yield call(getSeasons, payload, seasonSelect)
+          if(seasonSelect !== undefined){
+
+          yield put({
+            type: ADD_SEASON_DATA,
+            payload:{poster_path:season.data.poster_path,
+                     name:season.data.name ,
+                     overview:season.data.overview,
+                     air_date:season.data.air_date,
+                     episodes:season.data.episodes
+            }
+          })
+          yield put({
+            type: ADD_EPISODES,
+            payload:season.data.episodes
+            
+          })
+        }
+        }
+        
   } catch (err) {
-    yield put({
-      type: ADD_SNACKBAR,
-      payload: {
-        view: true,
-        message: '¿esta pelicula existe?'
-      }
-    })
+    
   }
+  
 }
 
 //obtiene una lista de comentarios de una pelicula en concreto
@@ -170,15 +231,7 @@ export function* apiVideoCard({payload, mediaType}) {
         }) 
       }
     }))
-  } catch (err) {
-    yield put({
-      type: ADD_SNACKBAR,
-      payload: {
-        view: true,
-        message: '¡No hay videos!'
-      }
-    })
-  }
+  } catch (err) {  }
 }
 
 //obtiene un listado de peliculas recomendadas
@@ -218,9 +271,10 @@ export function* apiSimilar({payload, mediaType}) {
   }
 }
 //obtiene una lista de generos
-export function* apiGenres() {
+export function* apiGenres({mediaType}) {
   try {
-    const response = yield call(getGenres)
+    const response = yield call(getGenres,mediaType)
+   
     yield put({
       type: ADD_GENRES,
       payload: response.data.genres
@@ -245,6 +299,7 @@ export function* apiGenres() {
 export function* apiMovieGenre({payload, mediaType}) {
   try {
     const response = yield call(getMovieGenre, payload, mediaType)
+   
     yield put({
       type: ADD_GENRE,
       payload: response.data.results

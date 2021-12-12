@@ -1,8 +1,16 @@
 //primero importo las const actions a utilizar (no importar las acciones)
 import {
+  SERVER_LIST,
+  TITLE_SERVER,
+  SELECTED_EPISODE,
+  SELECTED_SEASON,
+  ADD_SEASONS,
+  ADD_SEASON_DATA,
+  ADD_EPISODES,
   ADD_TOP,
+  ADD_LAST_ADD,
   ADD_MOVIE,
-  ADD_TYPE,
+  ADD_MEDIA_TYPE,
   ADD_SEARCH,
   ADD_SEARCH_RESULTS,
   ADD_GENRES,
@@ -15,12 +23,21 @@ import {
   ADD_SNACKBAR,
   ADD_PAGE,
   ADD_TOTAL_PAGES,
+ 
 } from './types';
 //creo un estado nuevo
-const initialState = {
+export const initialState = {
+  serverList:[],
+  titleServer:"",
+  seasonSelected:null,
+  episodeSelected:null,
+  seasons:[],
+  seasonData:[],
+  episodes:[],
   top: [],
+  lastAdd:[],
   movie: [],
-  type:'',
+  mediaType:'movie',
   search: '',
   results: [],
   genres: [],
@@ -49,13 +66,53 @@ const initialState = {
   y por segunda se pasa el action
 */
 export default function (state = initialState, action) {
-  
+ 
+  console.log(action)
   switch (action.type) {
+    case SERVER_LIST:
+      return {
+        ...state,   
+        serverList:action.serverList
+      }
+    case TITLE_SERVER:
+      return {
+        ...state,   
+        titleServer:action.titleServer
+      }
+    case ADD_SEASONS:
+      return {
+        ...state,   
+        seasons:action.payload
+      }
+      case SELECTED_SEASON:
+      return {
+        ...state,   
+        seasonSelected:action.seasonSelected
+      }
+      case SELECTED_EPISODE:
+      return {
+        ...state,   
+        episodeSelected:action.episodeSelected
+      }
+      case ADD_SEASON_DATA:
+        return {
+          ...state,   
+          seasonData:action.payload
+        } 
+      case ADD_EPISODES:
+        return {
+          ...state,   
+          episodes:action.payload
+        } 
     case ADD_TOP:
       return {
-        ...state,
-        
+        ...state,   
         top:action.payload
+      }
+    case ADD_LAST_ADD:
+    return {
+       ...state, 
+        lastAdd:action.payload
       }
     case ADD_MOVIE:
       return {
@@ -63,10 +120,10 @@ export default function (state = initialState, action) {
         movie: action.payload
         
       }
-    case ADD_TYPE:
+    case ADD_MEDIA_TYPE:
       return {
         ...state,
-        type: action.type
+        mediaType: action.mediaType
       }       
     case ADD_SEARCH:
       return {

@@ -1,6 +1,9 @@
 import { 
+  CALL_SERVER_PPHD,
   CALL_TOP, 
+  CALL_LAST_ADD,
   ADD_MOVIE, 
+  ADD_EPISODES,
   ADD_SEARCH, 
   ADD_SEARCH_RESULTS, 
   ADD_VIDEO, 
@@ -24,24 +27,44 @@ import {
   Actions call...
       Son actions que cumplen la funcion de ser utilizadas por saga para hacer cambios
 */
+export const callServerPPHD = (movieName, releaseDate, mediaType, trailer  ) => {
+  return {
+    type: CALL_SERVER_PPHD,
+    movieName:movieName,
+    releaseDate:releaseDate,
+    mediaType:mediaType,
+    trailer:trailer
+  }
+}
 export const callPage = (val) => {
   return {
     type: CALL_PAGE,
     page:val,
   }
 }
-export const callTop = (val) => {
+export const callTop = (val, mediaType) => {
   return {
     type: CALL_TOP,
     page:val,
+    mediaType:mediaType
   }
 }
-export const callId = (val, mediaType) => {
+export const callLastAdd = (val, mediaType) => {
+  return {
+    type: CALL_LAST_ADD,
+    page:val,
+    mediaType:mediaType
+  }
+}
+export const callId = (val, mediaType, seasonSelect) => {
+  
   return {
     type: CALL_ID,
     payload: val,
-    mediaType:mediaType
+    mediaType:mediaType,
+    seasonSelect:seasonSelect,
   }
+  
 }
 export const callReview = (val, mediaType) => {
   return {
@@ -81,9 +104,10 @@ export const callSimilar = (val, mediaType) => {
   }
 }
 
-export const callGenre = () => {
+export const callGenre = (mediaType) => {
   return {
-    type: CALL_GENRE
+    type: CALL_GENRE,
+    mediaType:mediaType
   }
 }
 export const callSearch = (val) => {
@@ -92,14 +116,20 @@ export const callSearch = (val) => {
     payload: val
   }
 }
-export const callMovieGenre = (val) => {
+export const callMovieGenre = (val, mediaType) => {
   return {
     type: CALL_MOVIE_GENRE,
     payload: val,
-    mediaType:"movie"
+    mediaType:mediaType
   }
 }
 //actions
+export const addEpisode = (val) => {
+  return {
+    type: ADD_EPISODES,
+    payload: val
+  }
+}
 export const addMovie = (val) => {
   return {
     type: ADD_MOVIE,
@@ -112,6 +142,7 @@ export const addSearch = (val) => {
     payload: val
   }
 }
+
 export const addPage = (val) => {
   return {
     type: ADD_PAGE,

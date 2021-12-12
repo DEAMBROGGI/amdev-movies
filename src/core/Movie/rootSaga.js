@@ -8,7 +8,10 @@ import { all, takeEvery } from 'redux-saga/effects';
 */
 
 import {
+  
+  CALL_SERVER_PPHD,
   CALL_TOP,
+  CALL_LAST_ADD,
   CALL_ID,
   CALL_REVIEW,
   CALL_VIDEO,
@@ -22,7 +25,10 @@ import {
 } from './types';
 
 import {
+  
+  apiServer,
   apiTop,
+  apiLastAdd,
   apiMovieId,
   apiMovieReviews,
   apiVideo,
@@ -37,7 +43,9 @@ import {
 
 function* rootSaga() {
   yield all([
+    takeEvery(CALL_SERVER_PPHD, apiServer),
     takeEvery(CALL_TOP, apiTop),
+    takeEvery(CALL_LAST_ADD, apiLastAdd),
     takeEvery(CALL_ID, apiMovieId),
     takeEvery(CALL_REVIEW, apiMovieReviews),
     takeEvery(CALL_VIDEO, apiVideo),

@@ -3,10 +3,19 @@
   la idea de hacerlo de esta forma es evitar problemas de tipado
   y facilitar el mantenimiento del codigo
 */
+export const CALL_SERVER_PPHD = 'CALL_SERVER_PHP';
+export const SERVER_LIST = 'SERVER_LIST';
+export const TITLE_SERVER ='TITLE_SERVER';
 export const ADD_TOP = 'ADD_TOP';
+export const SELECTED_SEASON = 'SELECTED_SEASON';
+export const SELECTED_EPISODE = 'SELECTED_EPISODE';
+export const ADD_SEASONS = 'ADD_SEASONS';
+export const ADD_SEASON_DATA = 'ADD_SEASON_DATA';
+export const ADD_EPISODES = 'ADD_EPISODES';
+export const ADD_LAST_ADD = 'ADD_LAST_ADD';
 export const ADD_PAGE ='ADD_PAGE';
 export const ADD_MOVIE = 'ADD_MOVIE';
-export const ADD_TYPE = 'ADD_TYPE';
+export const ADD_MEDIA_TYPE = 'ADD_MEDIA_TYPE';
 export const ADD_SEARCH = 'ADD_SEARCH';
 export const ADD_SEARCH_RESULTS = 'ADD_SEARCH_RESULT';
 //trae los generos de la api
@@ -33,6 +42,7 @@ export const ADD_TOTAL_PAGES = 'ADD_TOTAL_PAGES';
       Son types que funcionan para controlar las actions que van a ser llamadas por saga
 */
 export const CALL_TOP = 'CALL_TOP';
+export const CALL_LAST_ADD = 'CALL_LAST_ADD';
 export const CALL_ID = 'CALL_ID';
 export const CALL_REVIEW = 'CALL_REVIEW';
 export const CALL_VIDEO = 'CALL_VIDEO';

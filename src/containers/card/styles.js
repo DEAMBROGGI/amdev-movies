@@ -6,8 +6,17 @@ import { height } from '@mui/system';
 export const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 400,
-    height:300,
+    height:"auto",
+    display:"flex",
+    textAlign:"center",
     zIndex:1,
+  },
+  cardTop: {
+    height:"auto",
+    display:"flex",
+    textAlign:"center",
+    zIndex:1,
+    
   },
   media: {
     height: 200,
@@ -15,12 +24,12 @@ export const useStyles = makeStyles(theme => ({
   },
   title: {
     height: 100,
-    display:"flex",
+    display:"flex !Important",
     justifyContent:"center",
     alignItems: 'center',
     cursor: 'auto',
     padding: "0px !Important",
-    textAlign:"center"
+    textAlign:"center !Important"
   },
   chip: {
     marginTop: '10px',

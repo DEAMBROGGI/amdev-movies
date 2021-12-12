@@ -18,7 +18,7 @@ function Movie() {
 
   const classes = useStyles();
 
-  const {genres, genreResults} = useSelector(state => state.movieReducer);
+  const {genres, genreResults, mediaType} = useSelector(state => state.movieReducer);
 
   const dispatch = useDispatch();
 
@@ -27,7 +27,7 @@ function Movie() {
       {genres && (
         genres.map((element) => {
           if(element.name === key) {
-            dispatch(callMovieGenre(element.id))
+            dispatch(callMovieGenre(element.id, mediaType))
             
           }
         })
@@ -47,13 +47,14 @@ function Movie() {
                   
                    
                    <Grid item xs={12} sm={6} md={4} lg={3} >
-                     <Link className="a" to={`/post/movie/${element.id}`}> 
+                     <Link className="a" to={`/post/${mediaType}/${element.id}`}> 
                     <Card 
                       element={{
-                        backdrop_path : element.backdrop_path,
-                        title: element.title,
+                        backdrop_path : element.backdrop_path || element.poster_path,
+                        poster_path:element.poster_path,
+                        title: element.title || element.name,
                         id: element.id,
-                        media_type: "movie"
+                        genre:element.genre_ids,
                       }}
                     />
                    </Link>   

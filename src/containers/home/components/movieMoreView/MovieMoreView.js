@@ -13,20 +13,21 @@ import Skeletor from '../../../../components/skeleton/Skeleton'
 import Card from '../../../card/Card'
 
 
+
 function MovieMoreView() {
 
   const classes = useStyles();
   const [page, setPage] = React.useState();
-  const top = useSelector(state => state.movieReducer.top);
+  const {top, mediaType} = useSelector(state => state.movieReducer);
   const numberOfPages = useSelector(state => state.movieReducer.numberOfPages)
   const dispatch = useDispatch();
   
   useEffect(() => {
     
-    dispatch(callTop())
+    dispatch(callTop(page,mediaType))
     
   }, []);
-  
+console.log(top)
   return (
     <>
       {top.length > 0 ? 
@@ -35,14 +36,21 @@ function MovieMoreView() {
             <Container fixed>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
-                  <h1 className={classes.paper}>Favoritos</h1>
+                  <h1 className={classes.paper}>Tendencias</h1>
                 </Grid>
-                {top && top.map((element, key)  => (
+                {top && top.map((element, index)  => (
                   <Grid item xs={12} sm={6} md={4} lg={3} >
                     <Link className="a" to={`/post/${element.media_type}/${element.id}`}>
                   <Card 
-                    element={element}
-                    key={key}
+                     element={{
+                      backdrop_path : element.backdrop_path || element.poster_path,
+                      poster_path:element.poster_path,
+                      title: element.title || element.name,
+                      id: element.id,
+                      genre:element.genre_ids,
+                    }}
+                    ranking={index + 1}
+                    key={index}
                     
                   />
                   </Link>
@@ -55,12 +63,13 @@ function MovieMoreView() {
         ):(
           <Skeletor />
         )}
-       <MMVPagination setPage={setPage} pageNumber={numberOfPages} /> 
+       <MMVPagination setPage={setPage} pageNumber={numberOfPages} mediaType={mediaType}/> 
     </>
   )
 }
 MovieMoreView.propTypes = {
   top: PropTypes.array,
+  mediaType:PropTypes.string,
   callTop: PropTypes.func
 }
 

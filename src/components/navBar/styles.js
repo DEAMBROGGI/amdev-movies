@@ -11,6 +11,8 @@ export const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+    display:"flex",
+    justifyContent:"center"
   },
   media: {
     height: 45,
@@ -23,6 +25,11 @@ export const useStyles = makeStyles(theme => ({
     background: theme.pallete.primary,
   },
   menu: {
-    color: '#fff'
+    color: '#fff',
+  },
+  btnMediaType:{
+    color: 'white',
+    fontWeight:900,
+    fontSize:30
   }
 }));

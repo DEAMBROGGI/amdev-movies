@@ -5,7 +5,7 @@
   }
   a {
     text-decoration: none;
-    cursor: auto;
+    cursor: pointer;
   }
   body {
     background: #f7f7f7f2;
@@ -25,4 +25,35 @@
    left: 0;
    z-index: 300;
    background-color: transparent;
+   cursor:pointer;
+   -webkit-user-drag: none;
  }
+ .react-multi-carousel-list{
+   padding: 10px;
+   -webkit-user-drag: none;
+ }
+  img {
+  
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+.degradado{
+  background: linear-gradient( to top, transparent 0%, black 25%, transparent 75%, white 100%);
+  position: absolute;
+   height: 100%;
+   width: 100%;
+   top: 0;
+   left: 0;
+   z-index: 300;
+   
+   cursor:pointer;
+   -webkit-user-drag: none;
+}
+.btnSeason{
+  background-color: black !important;
+  color: white !important;
+  margin: 2px !important;
+}
