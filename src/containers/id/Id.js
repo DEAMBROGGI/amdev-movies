@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import {getMovieServers} from "pelisplushd"
+
 /*import {
   apiMovieId,
   apiMovieReviews,
@@ -37,7 +37,6 @@ import Avatar from '@material-ui/core/Avatar';
 import SkeletonId from '../../components/skeleton/SkeletonId';
 import Button from '@mui/material/Button';
 import Serie from "../Serie/Season"
-import ServerMovie from '../../core/Movie/servers/serverdos'
 import { SELECTED_SEASON, SELECTED_EPISODE } from '../../core/Movie/types';
 
 function Id() {
@@ -213,7 +212,7 @@ const Season = ()=>{
                         
         {mediaType === "tv" && <Season></Season>}
         {seasonSelect != undefined && <Serie seasonSelect={seasonSelect}/>}
-      <ServerVideo tailer={trailer} key={key}/>         
+      <ServerVideo tailer={trailer} key={key}/>        
        <Recommendations  />
    
         </>

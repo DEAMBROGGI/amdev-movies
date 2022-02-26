@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   ADD_SEASONS,
   ADD_EPISODES,
@@ -31,26 +32,19 @@ import {
   getVideoCard,
   getSeasons
 } from './services';
-import {GetServerPPHD, selectIDmovie,ServerMovie} from './servers/serverdos'
 import { put, all, call } from 'redux-saga/effects';
 
-//Container HOME (all called to the api)
-// trae de la api las peliculas mas buscadas
-
-export  function* apiServer({movieName,releaseDate, mediaType, trailer}) {
+export   function* apiServer({movieName,releaseDate, mediaType, trailer}) { 
   try {
-   const response =  yield  call( GetServerPPHD, movieName,releaseDate, mediaType, trailer)
-   let test = JSON.stringify(response);
-  
-   console.log(test)
-      yield put({
-    type:SERVER_LIST,
-    serverList:response
-  })
-  
-     } 
-  catch (err) {
+     const servers = yield  axios.post('http://localhost:4000/api/test', {movieName,releaseDate, mediaType, trailer})
    
+    yield put({
+    type:SERVER_LIST,
+    serverList:servers.data
+  
+})   
+} 
+  catch (err) { 
  }
 }
 export function* apiTop({page,mediaType}) {
@@ -71,7 +65,7 @@ export function* apiTop({page,mediaType}) {
         type: ADD_SNACKBAR,
         payload: {
           view: true,
-          message: 'No pudimos trarte las peliculas Top.' 
+          message: 'No pudimos traerte las peliculas Top.' 
         }
       })
     }

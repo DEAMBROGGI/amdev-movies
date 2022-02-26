@@ -12,6 +12,8 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
     "cheerio": "^1.0.0-rc.10",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
     "formik": "^2.2.9",
     "material-ui-player": "^0.2.5",
     "pelisplushd": "^1.0.1",
